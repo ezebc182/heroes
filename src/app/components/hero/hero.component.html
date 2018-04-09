@@ -1,0 +1,31 @@
+<div class="row justify-content-md-center top30">
+    <div class="col-md-9 col-md-offset-3">
+        <h1>Hero: <small>{{ hero.name }}</small></h1>
+        <button class="btn btn-outline-danger" [routerLink]="['/heroes']">Back</button>
+        <button class="btn btn-outline-primary" (click)="createHero(form)">New</button>
+        <hr>
+        <form (ngSubmit)="save()" #form="ngForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input required [(ngModel)]="hero.name" name="name" class="form-control" placeholder="Hero name" type="text">
+            </div>
+
+            <div class="form-group">
+                <label for="name">House</label>
+                <select [(ngModel)]="hero.house" name="house" class="form-control">
+                <option value="Marvel">Marvel</option>
+                <option value="DC">DC</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Bio</label>
+                <textarea name="bio" [(ngModel)]="hero.bio" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" [disabled]="!form.valid" class="btn btn-block btn-outline-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

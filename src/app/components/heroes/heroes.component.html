@@ -1,0 +1,51 @@
+<div class="row justify-content-md-center top30">
+    <div class="col-md-12">
+        <h1>Table of heroes</h1>
+        <div class="text-right">
+            <button class="btn btn-outline-primary" [routerLink]="['/hero/new']">New</button>
+        </div>
+
+        <hr>
+
+
+        <br>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">House</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let k of heroes | firebaseKeys; let i = index;">
+                        <th scope="row"> {{ i + 1 }}</th>
+                        <td>{{ heroes[k].name }}</td>
+                        <td>{{ heroes[k].house }}</td>
+                        <td>
+                            <button [routerLink]="['/hero', k]" class="btn btn-outline-primary">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button (click)="removeHero(k)" class="btn btn-outline-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="(heroes | firebaseKeys).length === 0 && !loading" class="alert alert-warning">
+                <strong>Hey!...</strong> this table has no records, please fill it!
+            </div>
+            <div *ngIf="loading" class="alert alert-info">
+                <strong>
+                    <i class="fa fa-spinner fa-spin fa-fw">
+                        <span class="sr-only"> Loading...</span>
+                    </i>Loading...
+                </strong> please wait.
+            </div>
+        </div>
+    </div>
+</div>

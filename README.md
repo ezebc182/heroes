@@ -1,27 +1,31 @@
 # Heroesapp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This project consists into the first step on creating a SPA with angular.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The app shows a collection of default Heroes (from Marvel & DC) that can be filtered by name, and of course show its detail in a separated page for the Hero.
 
-## Code scaffolding
+Basically, the app use api RESTFul of Firebase, in order to perform the 4 basics http operations:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* GET: Here you can get all the availables heroes from database (Firebase) or simply, the information of one of them. 
+* POST: Creates a new Hero, with some data like: name, bio, appearence date and house (Marvel or DC).
+* PUT: As it is, update some piece of data of the Hero.
+* DELETE: Given a hero, you can remove it from database. Confirmation window will ask to confirm your operation.
 
-## Build
+All this operations (apart of get method) will be able to perform if the user is logged in.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Authentication
 
-## Running unit tests
+As this preliminary version, the user log in to the app via auth0 through the following social accounts:
+* Google
+* Twitter
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+When the user logged in, a new menu will show up, "Dashboard". Here is where the heroes are added, updated, checked or deleted.
 
-## Running end-to-end tests
+## TODO
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* Make works Facebook social account.
+* Unit tests :)
+* User profile
+* a bounch of things ...

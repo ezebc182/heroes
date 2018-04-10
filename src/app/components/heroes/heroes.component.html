@@ -2,11 +2,10 @@
     <div class="col-md-12">
         <h1>Table of heroes</h1>
         <div class="text-right">
-            <button class="btn btn-outline-primary" [routerLink]="['/hero/new']">New</button>
+            <button class="btn btn-outline-success" [routerLink]="['/admin','hero','new','create']">Add new</button>
         </div>
 
         <hr>
-
 
         <br>
 
@@ -26,10 +25,13 @@
                         <td>{{ heroes[k].name }}</td>
                         <td>{{ heroes[k].house }}</td>
                         <td>
-                            <button [routerLink]="['/hero', k]" class="btn btn-outline-primary">
+                            <button type="button" title="View" [routerLink]="['/admin', 'hero', k, 'read']" class="btn btn-outline-secondary">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button title="Edit" [routerLink]="['/admin', 'hero', k, 'edit']" class="btn btn-outline-primary">
                                 <i class="fa fa-edit"></i>
                             </button>
-                            <button (click)="removeHero(k)" class="btn btn-outline-danger">
+                            <button title="¿Delete?" (click)="removeHero(k)" class="btn btn-outline-danger">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>

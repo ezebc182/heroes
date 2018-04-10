@@ -1,6 +1,8 @@
 export interface Hero {
+    key$?: string;
     name: string;
     house: string;
     bio: string;
-    key$?: string;
+    img?: string;
+    appearance?: Date;
 }

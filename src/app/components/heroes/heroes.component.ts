@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
-
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
@@ -9,7 +8,7 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class HeroesComponent implements OnInit {
   heroes: any[] = [];
-  loading: boolean = true;
+  loading = true;
 
   constructor(private _heroesService: HeroesService) { }
 
@@ -19,11 +18,16 @@ export class HeroesComponent implements OnInit {
           setTimeout( () => {
               this.heroes = data;
               this.loading = !this.loading;
-          }, 2500);
+          }, 700);
         });
   }
 
   removeHero (key$: string) {
+    const confirm = window.confirm('Are you sure about this?');
+    if (!confirm) {
+      return;
+    }
+
     this._heroesService.delete(key$)
         .subscribe( data => {
           if (data != null) {

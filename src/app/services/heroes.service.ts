@@ -1,13 +1,25 @@
+import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Hero } from '../interfaces/hero.interface';
 import 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class HeroesService {
+  private heroes: Hero[] = [];
+  private hero: Hero;
+  private heroSource = new BehaviorSubject<Hero>(this.hero);
+
+  currentHero = this.heroSource.asObservable();
+
   heroesURI = 'https://heroesapp-6f59a.firebaseio.com/heroes';
 
   constructor(private http: Http) {}
+
+  changeHeroSelected(hero: Hero) {
+    this.heroSource.next(hero);
+  }
 
   create(hero: Hero) {
     const body = JSON.stringify(hero);
@@ -51,6 +63,7 @@ export class HeroesService {
       'Content-Type': 'application/json'
     });
     return this.http.get(url, { headers }).map(res => {
+      this.heroes = res.json();
       return res.json();
     });
   }
@@ -64,4 +77,18 @@ export class HeroesService {
       return res.json();
     });
   }
+
+  filterHeroes(term: string) {
+    let searchResults: any[] = [];
+    let keys = [];
+      for (let key in this.heroes) {
+        let hero = this.heroes[key];
+        keys.push(key);
+        if (hero.name.toLowerCase().indexOf(term.toLowerCase())  !== -1) {
+         searchResults.push(this.heroes[key]);
+        }
+      }
+
+      return searchResults;
+    }
 }

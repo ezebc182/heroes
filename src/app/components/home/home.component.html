@@ -1,0 +1,21 @@
+<h1 class="animated fadeIn">Heroes <small>Marvel & DC</small></h1>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-inline ">
+            <input autofocus #term (keyup)="filterHeroes(term.value)" class="form-control-lg form-control" type="search" placeholder="Filter hero by name" aria-label="Search">
+        </div>
+    </div>
+</div>
+<br>
+
+<div class=" card-columns ">
+    <div class="card animated fadeIn fast" *ngFor="let k of heroes | firebaseKeys; let i = index;">
+        <img class="card-img-top " [src]="heroes[k].img | img" [alt]="heroes[k].name">
+        <div class="card-body ">
+            <h5 class="card-title ">{{ heroes[k].name }}</h5>
+            <p class="card-text ">{{ heroes[k].bio | truncate:300 }}</p>
+            <button (click)="showHeroDetail(heroes[k].name, k)" type="button " class="btn btn-outline-primary btn-block ">More ...</button>
+        </div>
+    </div>
+</div>

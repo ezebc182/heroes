@@ -1,5 +1,7 @@
 # Heroesapp
 
+![alt text](https://github.com/ezebc182/heroes/blob/master/src/assets/img/dc.jpg)
+
 This project consists into the first step on creating a SPA with angular.
 
 ## Description

@@ -42,6 +42,6 @@ export class HomeComponent implements OnInit {
 
   selectedHero() {
     this._heroesService.changeHeroSelected(this.hero);
-    this.router.navigate(["/hero-detail", slugify(this.hero.name)]);
+    this.router.navigate(['/hero-detail', slugify(this.hero.name)]);
   }
 }

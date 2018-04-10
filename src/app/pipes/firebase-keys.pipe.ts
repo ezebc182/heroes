@@ -7,10 +7,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FirebaseKeysPipe implements PipeTransform {
 
   transform(value: any): any {
-    let keys = [];
+    const keys = [];
 
-    for (let key in value) {
-      keys.push(key);
+    for (const key in value) {
+      if (key) {
+        keys.push(key);
+      }
     }
 
     return keys;

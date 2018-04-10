@@ -2,8 +2,9 @@ import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Hero } from '../interfaces/hero.interface';
-import 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class HeroesService {
@@ -79,13 +80,15 @@ export class HeroesService {
   }
 
   filterHeroes(term: string) {
-    let searchResults: any[] = [];
-    let keys = [];
-      for (let key in this.heroes) {
-        let hero = this.heroes[key];
-        keys.push(key);
-        if (hero.name.toLowerCase().indexOf(term.toLowerCase())  !== -1) {
-         searchResults.push(this.heroes[key]);
+    const searchResults: any[] = [];
+    const keys = [];
+      for (const key in this.heroes) {
+        if (key) {
+          const hero = this.heroes[key];
+          keys.push(key);
+          if (hero.name.toLowerCase().indexOf(term.toLowerCase())  !== -1) {
+           searchResults.push(this.heroes[key]);
+          }
         }
       }
 

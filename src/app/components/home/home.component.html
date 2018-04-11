@@ -1,21 +1,56 @@
-<h1 class="animated fadeIn">Heroes <small>Marvel & DC</small></h1>
-<hr>
 <div class="row">
-    <div class="col-md-12">
-        <div class="form-inline ">
-            <input autofocus #term (keyup)="filterHeroes(term.value)" class="form-control-lg form-control" type="search" placeholder="Filter hero by name" aria-label="Search">
+    <div class="col-md-9">
+        <h1 class="animated fadeIn">Heroes <small>Marvel & DC</small></h1>
+    </div>
+    <div class="col-md-3" role="group">
+        <div class="float-right" *ngIf="filtering">
+            <h5>Displaying <span class="badge badge-pill badge-primary"> {{ (heroes | firebaseKeys).length }}</span> heroe(s)</h5>
         </div>
     </div>
 </div>
-<br>
 
-<div class=" card-columns ">
-    <div class="card animated fadeIn fast" *ngFor="let k of heroes | firebaseKeys; let i = index;">
-        <img class="card-img-top " [src]="heroes[k].img | img" [alt]="heroes[k].name">
-        <div class="card-body ">
-            <h5 class="card-title ">{{ heroes[k].name }}</h5>
-            <p class="card-text ">{{ heroes[k].bio | truncate:300 }}</p>
-            <button (click)="showHeroDetail(heroes[k].name, k)" type="button " class="btn btn-outline-primary btn-block ">More ...</button>
+<hr>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <input [(ngModel)]="term.value" autofocus #term (keyup)="filterHeroes(term.value)" class="form-control-lg form-control" type="search" placeholder="Filter hero by name" aria-label="Search">
+
+    </div>
+</div>
+
+<div class="row top30">
+    <div class="col-md-12">
+        <div *ngIf="loading" class="alert alert-info">
+            <strong>
+                    <i class="fa fa-spinner fa-spin fa-fw">
+                        <span class="sr-only"> Loading...</span>
+                    </i>Loading...
+                </strong> please wait.
+        </div>
+        <div *ngIf="(heroes | firebaseKeys).length === 0 && !loading">
+            <div class="alert alert-info">
+                <h3>There is no hero called: <strong>"{{ term.value }}"</strong></h3>
+                <hr>
+                <h5>
+                    <p *ngIf="!auth.isAuthenticated()">Please log-in or sign-in to add the new hero
+                        <a href="javascript:void(0);" (click)="login()">Log in</a>
+                    </p>
+                    <p *ngIf="auth.isAuthenticated()">
+                        <button class="btn btn-outline-primary" [routerLink]="['/admin','hero','new','create']">
+                                ¡Add him/her to the list!</button>
+                    </p>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class=" card-columns ">
+        <div class="card animated fadeIn fast" *ngFor="let k of heroes | firebaseKeys; let i = index;">
+            <img class="card-img-top " [src]="heroes[k].img | img" [alt]="heroes[k].name">
+            <div class="card-body ">
+                <h5 class="card-title ">{{ heroes[k].name }}</h5>
+                <p class="card-text ">{{ heroes[k].bio | truncate:150 }}</p>
+                <button (click)="showHeroDetail(heroes[k].name, k)" type="button " class="btn btn-outline-primary btn-block ">More ...</button>
+            </div>
         </div>
     </div>
 </div>

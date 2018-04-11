@@ -13,6 +13,27 @@ body {
     margin-top: 30px;
 }
 
+.w-100 {
+    width: 100%!important;
+}
+
+.d-block {
+    display: block!important;
+    max-height: 350px;
+    overflow-y: hidden;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+*,
+ ::after,
+ ::before {
+    box-sizing: border-box;
+}
+
 .footer {
     position: fixed;
     bottom: 0px;

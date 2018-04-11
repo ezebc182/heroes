@@ -9,13 +9,18 @@ import { Hero } from '../../interfaces/hero.interface';
 })
 export class HeroDetailComponent implements OnInit {
 
-  hero: Hero;
+  hero: Hero = {
+    name: '',
+    bio: '',
+    house: ''
+  };
 
   constructor(
-    private _heroesService: HeroesService) { }
+    private _heroesService: HeroesService) {}
 
   ngOnInit() {
     this._heroesService.currentHero.subscribe(hero => {
+      localStorage.setItem('hero', JSON.stringify(hero));
       this.hero = hero;
     });
   }

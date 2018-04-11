@@ -14,12 +14,11 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this._heroesService.getAll()
-        .subscribe( data => {
-          setTimeout( () => {
-              this.heroes = data;
-              this.loading = !this.loading;
-          }, 700);
-        });
+        .then( (data: any) => {
+            this.heroes = data;
+            this.loading = !this.loading;
+        })
+        .catch( error => console.error(error));
   }
 
   removeHero (key$: string) {
@@ -28,15 +27,17 @@ export class HeroesComponent implements OnInit {
       return;
     }
 
-    this._heroesService.delete(key$)
-        .subscribe( data => {
-          if (data != null) {
-            console.error(data);
-          } else {
-            delete this.heroes[key$];
-            alert('The hero, was successfuly removed!');
-          }
-        });
+    this._heroesService
+      .delete(key$)
+      .then(data => {
+        if (data != null) {
+          console.error(data);
+        } else {
+          delete this.heroes[key$];
+          alert('The hero, was successfuly removed!');
+        }
+      })
+      .catch(error => console.error(error));
   }
 
 }

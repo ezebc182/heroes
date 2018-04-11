@@ -1,6 +1,6 @@
 <div class="row justify-content-md-center top30">
     <div class="col-md-9 col-md-offset-3">
-        <h1>Hero: <small>{{ hero.name }}</small></h1>
+        <h1>Hero: <small class="text-capitalize">{{ hero.name }}</small></h1>
         <div class="text-right">
             <button class="btn btn-outline-danger" [routerLink]="['/admin', 'heroes']">Back</button>
             <button class="btn btn-outline-success" (click)="createHero(form)">Add new</button>
@@ -9,32 +9,44 @@
         <hr>
         <form (ngSubmit)="save()" #form="ngForm">
             <fieldset [disabled]="disabled">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input autofocus required [(ngModel)]="hero.name" name="name" class="form-control" placeholder="Hero name" type="text">
-                </div>
 
-                <div class="form-group">
-                    <label for="name">House</label>
-                    <select [(ngModel)]="hero.house" name="house" class="form-control">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="photo">Photo</label>
+                            <app-upload-file></app-upload-file>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input autofocus required [(ngModel)]="hero.name" name="name" class="form-control text-capitalize" placeholder="Hero name" type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">House</label>
+                            <select [(ngModel)]="hero.house" name="house" class="form-control">
                         <option value="Marvel">Marvel</option>
                         <option value="DC">DC</option>
                     </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appearance">Appearance date</label>
+                            <input type="date" name="appearance" [(ngModel)]="hero.appearance" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Bio</label>
+                            <textarea rows="5" name="bio" [(ngModel)]="hero.bio" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" [disabled]="!form.valid" class="btn btn-block btn-outline-success">Save</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="appearance">Appearance date</label>
-                    <input type="date" name="appearance" [(ngModel)]="hero.appearance" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                    <label for="name">Bio</label>
-                    <textarea rows="5" name="bio" [(ngModel)]="hero.bio" class="form-control"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" [disabled]="!form.valid" class="btn btn-block btn-outline-success">Save</button>
-                </div>
             </fieldset>
         </form>
     </div>

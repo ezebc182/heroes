@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 // Components
 import { AppComponent } from './app.component';
@@ -25,6 +29,10 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { HeroesService } from './services/heroes.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AppearencePipe } from './pipes/appearence.pipe';
+import { FirebaseUploadService } from './services/firebase-upload.service';
+import { environment } from '../environments/environment';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +47,26 @@ import { AuthGuardService } from './services/auth-guard.service';
     AboutComponent,
     ImgPipe,
     TruncatePipe,
-    HeroDetailComponent
+    HeroDetailComponent,
+    AppearencePipe,
+    UploadFileComponent
   ],
-  imports: [BrowserModule, FormsModule, APP_ROUTING, HttpModule],
-  providers: [HeroesService, AuthService, AuthGuardService],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    APP_ROUTING,
+    HttpModule,
+    AngularFireModule.initializeApp(environment.firebase, 'my-app-name'),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule
+  ],
+  providers: [
+    HeroesService,
+    AuthService,
+    AuthGuardService,
+    FirebaseUploadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

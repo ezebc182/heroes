@@ -16,7 +16,13 @@ export class HeroesService {
 
   heroesURI = 'https://heroesapp-6f59a.firebaseio.com/heroes';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+    this.getAll()
+      .then((data: any) => {
+        this.heroes = data;
+      })
+      .catch(error => console.error(error));
+  }
 
   changeHeroSelected(hero: Hero) {
     this.heroSource.next(hero);
@@ -30,8 +36,15 @@ export class HeroesService {
 
     const url = `${this.heroesURI}.json`;
 
-    return this.http.post(url, body, { headers }).map(res => {
-      return res.json();
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(url, body, { headers })
+        .map(res => {
+          return res.json();
+        })
+        .subscribe(data => {
+            resolve(data);
+          }, error => reject(error));
     });
   }
 
@@ -43,8 +56,15 @@ export class HeroesService {
 
     const url = `${this.heroesURI}/${key$}.json`;
 
-    return this.http.put(url, body, { headers }).map(res => {
-      return res.json();
+    return new Promise((resolve, reject) => {
+     this.http
+       .put(url, body, { headers })
+       .map(res => {
+         return res.json();
+       })
+       .subscribe(data => {
+           resolve(data);
+         }, error => reject(error));
     });
   }
 
@@ -53,9 +73,17 @@ export class HeroesService {
     const headers = new Headers({
       'Content-Type': 'application/json'
     });
-    return this.http.get(url, { headers }).map(res => {
-      return res.json();
-    });
+
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url, { headers })
+        .map(res => {
+          return res.json();
+        })
+        .subscribe(data => {
+            resolve(data);
+          }, error => reject(error));
+      });
   }
 
   getAll() {
@@ -63,35 +91,49 @@ export class HeroesService {
     const headers = new Headers({
       'Content-Type': 'application/json'
     });
-    return this.http.get(url, { headers }).map(res => {
-      this.heroes = res.json();
-      return res.json();
+
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(url, { headers })
+        .map(res => {
+          return res.json();
+        })
+        .subscribe(data => {
+            resolve(data);
+          }, error => reject(error));
     });
   }
 
   delete(key$: string) {
-     const url = `${this.heroesURI}/${key$}.json`;
-    const headers = new Headers({
+      const url = `${this.heroesURI}/${key$}.json`;
+      const headers = new Headers({
       'Content-Type': 'application/json'
-    });
-    return this.http.delete(url, { headers }).map(res => {
-      return res.json();
-    });
+      });
+
+     return new Promise((resolve, reject) => {
+       this.http
+         .delete(url, { headers })
+         .map(res => {
+           return res.json();
+         })
+         .subscribe(data => {
+             resolve(data);
+           }, error => reject(error));
+     });
   }
 
   filterHeroes(term: string) {
-    const searchResults: any[] = [];
-    const keys = [];
+    const filteredHeroes: Hero[] = [];
+    const searchResults: Hero[] = [];
       for (const key in this.heroes) {
         if (key) {
           const hero = this.heroes[key];
-          keys.push(key);
-          if (hero.name.toLowerCase().indexOf(term.toLowerCase())  !== -1) {
-           searchResults.push(this.heroes[key]);
+          if (hero.name.toLowerCase().indexOf(term.toLowerCase()) >= 0) {
+            filteredHeroes[key] = (this.heroes[key]);
+            searchResults[key] = (filteredHeroes[key]);
           }
         }
       }
-
       return searchResults;
     }
 }

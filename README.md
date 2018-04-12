@@ -25,9 +25,24 @@ As this preliminary version, the user log in to the app via auth0 through the fo
 
 When the user logged in, a new menu will show up, "Dashboard". Here is where the heroes are added, updated, checked or deleted.
 
+## Use
+
+
+By entering the "heroes" application you can:
+
+* See a list of heroes
+* Filter heroes by name
+* In case the search for a hero is not satisfactory, you can:
+ - In case of being an anonymous user, login to be able to add it to the list.
+- If you are logged in, go directly to the administration panel (Dashboard link) in which a table will be displayed in order to:
+  - See
+  - Edit
+  - Remove
+  - Create
+
+heroes.
+
 ## TODO
 
-* Make works Facebook social account.
 * Unit tests :)
-* User profile
-* a bounch of things ...
+

@@ -27,7 +27,6 @@ When the user logged in, a new menu will show up, "Dashboard". Here is where the
 
 ## Use
 
-
 By entering the "heroes" application you can:
 
 * See a list of heroes
@@ -41,6 +40,12 @@ By entering the "heroes" application you can:
   - Create
 
 heroes.
+
+## Stack
+- Angular
+- Firebase RESTFul API, Cloud storage, Realtime database.
+- Boostrap 4
+
 
 ## TODO
 

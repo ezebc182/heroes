@@ -1,10 +1,35 @@
-<div class="well drop-zone file-over">
+<div *ngIf="photos.length === 0" [photos]="photos" (mouseOverElement)="isDropping = $event" appNgDropFiles class="well drop-zone" [ngClass]="{'file-over': isDropping}">
     <h6>Drop files here</h6>
     <img src="/assets/img/drop-images.png" alt="">
 </div>
-<br>
-<div class="progress" style="height: 2px;">
-    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+<div *ngIf="items">
+
+    <div *ngFor="let item of items | async">
+        {{ item | json}}
+        <img [src]="item.url" alt="item.name">
+    </div>
+
 </div>
 <br>
-<button (click)="uploadImage($event)" class="btn btn-outline-secondary btn-block">Upload</button>
+
+<div *ngIf="photos.length">
+    <div *ngFor="let photo of photos">
+        <div class="progress" style="height: 2px;">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': photo.progress + '%'}"></div>
+        </div>
+        <p [ngClass]="{'text-green': photo.progress === 100}">
+            {{ photo.fileName }} - {{ photo.file.size | mb }}
+            <a *ngIf="!photo.isUploading" (click)="clearPhotos()" href="javascript:void(0);" class="text-danger text-bold">
+                <i class="fa fa-times"></i>
+            </a>
+            <a *ngIf="photo.isUploading &&  photo.progress === 100" class="text-success text-bold" href="javascript:void(0);">
+                <i class="fa fa-check"></i>
+            </a>
+        </p>
+    </div>
+</div>
+<br>
+<fieldset [disabled]="(photos.length === 0) ? 'disabled' : ''">
+
+    <button (click)="uploadImage($event)" class="btn btn-outline-secondary btn-block">Upload</button>
+</fieldset>

@@ -4,8 +4,8 @@ import { Hero } from '../../interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
-  selector: "app-hero",
-  templateUrl: "./hero.component.html",
+  selector: 'app-hero',
+  templateUrl: './hero.component.html',
   styles: []
 })
 export class HeroComponent implements OnInit {
@@ -13,9 +13,9 @@ export class HeroComponent implements OnInit {
   mode: string;
   disabled: string;
   hero: Hero = {
-    name: "",
-    bio: "",
-    house: "Marvel"
+    name: '',
+    bio: '',
+    house: 'Marvel'
   };
 
   constructor(
@@ -24,10 +24,10 @@ export class HeroComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
-      this.id = params["id"];
-      this.mode = params["mode"];
+      this.id = params['id'];
+      this.mode = params['mode'];
     });
-    this.disabled = this.mode === "read" ? "disabled" : null;
+    this.disabled = this.mode === 'read' ? 'disabled' : null;
   }
 
   ngOnInit() {
@@ -35,13 +35,13 @@ export class HeroComponent implements OnInit {
   }
 
   save() {
-    this.id === "new" ? this.newHero() : this.editHero();
+    this.id === 'new' ? this.newHero() : this.editHero();
   }
 
   createHero(form: NgForm) {
-    this.router.navigate(["/admin", "hero", "new", "create"]);
+    this.router.navigate(['/admin', 'hero', 'new', 'create']);
     form.reset({
-      house: "Marvel"
+      house: 'Marvel'
     });
   }
 
@@ -50,7 +50,7 @@ export class HeroComponent implements OnInit {
       .create(this.hero)
       .then((data: any) => {
         if (data) {
-          this.router.navigate(["/hero", data.name, "create"]);
+          this.router.navigate(['/hero', data.name, 'create']);
           alert(`${this.hero.name} was successfuly created!`);
         }
       })

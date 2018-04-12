@@ -14,9 +14,10 @@ import { HeroComponent } from './components/hero/hero.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
-import { SearchComponent } from './components/search/search.component';
 import { AboutComponent } from './components/about/about.component';
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
+
 // Routing
 import { APP_ROUTING } from './app.routes';
 
@@ -24,15 +25,20 @@ import { APP_ROUTING } from './app.routes';
 import { FirebaseKeysPipe } from './pipes/firebase-keys.pipe';
 import { ImgPipe } from './pipes/img.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { MbPipe } from './pipes/mb.pipe';
+import { AppearencePipe } from './pipes/appearence.pipe';
 
 // Services
 import { HeroesService } from './services/heroes.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
-import { AppearencePipe } from './pipes/appearence.pipe';
 import { FirebaseUploadService } from './services/firebase-upload.service';
+
 import { environment } from '../environments/environment';
-import { UploadFileComponent } from './components/upload-file/upload-file.component';
+
+// Directives
+import { NgDropFilesDirective } from './directives/ng-drop-files.directive';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -43,20 +49,22 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    SearchComponent,
     AboutComponent,
     ImgPipe,
     TruncatePipe,
     HeroDetailComponent,
     AppearencePipe,
-    UploadFileComponent
+    UploadFileComponent,
+    NgDropFilesDirective,
+    MbPipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     APP_ROUTING,
     HttpModule,
-    AngularFireModule.initializeApp(environment.firebase, 'my-app-name'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule

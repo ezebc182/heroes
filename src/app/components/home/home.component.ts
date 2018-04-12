@@ -44,8 +44,6 @@ export class HomeComponent implements OnInit {
   }
 
   showHeroDetail(name: string, key$: string) {
-    console.log(name);
-    console.log(key$);
     this._heroesService
       .get(key$)
       .then((data: any) => {

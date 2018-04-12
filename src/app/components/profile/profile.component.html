@@ -1,0 +1,15 @@
+<button *ngIf="!auth.isAuthenticated()" (click)="login()" type="button" class="btn btn-outline-primary">Login</button>
+
+<div *ngIf="auth.isAuthenticated()">
+
+    <div class="dropdown show">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+     <img class="img-fluid img-circle" src="{{profile?.picture}}" class="avatar" alt="avatar">
+     {{profile?.name}}
+  </button>
+        <div class="dropdown-menu">
+            <a (click)="logout()" class="text-dark dropdown-item" href="#">
+                <i class="fa fa-power-off"></i> Logout</a>
+        </div>
+    </div>
+</div>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
-  auth0 = new auth0.WebAuth({
+    auth0 = new auth0.WebAuth({
     clientID: 'w3DIEabQ10mM7NhvTG4k4d7k0v569F3O',
     domain: 'pichon.auth0.com',
     responseType: 'token id_token',
@@ -26,7 +27,8 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/admin']);
+        window.location.reload(true);
       } else if (err) {
         this.router.navigate(['/home']);
       }
@@ -48,6 +50,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+
     // Go back to the home route
     this.router.navigate(['/']);
   }
@@ -56,21 +59,36 @@ export class AuthService {
     // Check whether the current time is past the
     // Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    if (expiresAt) {
+
+      return new Date().getTime() < expiresAt;
+    }
+    return false;
   }
 
   public getProfile(cb): void {
-      const accessToken = localStorage.getItem('access_token');
-      if (!accessToken) {
-        throw new Error('Access Token must exist to fetch profile');
-      }
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access Token must exist to fetch profile');
+    }
 
-      const self = this;
-      this.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (profile) {
-          self.userProfile = profile;
-        }
-        cb(err, profile);
-      });
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+      }
+      cb(err, profile);
+    });
   }
+  public renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        this.setSession(result);
+      }
+    });
+
+  }
+
 }

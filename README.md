@@ -47,7 +47,3 @@ heroes.
 - Boostrap 4
 
 
-## TODO
-
-* Unit tests :)
-
